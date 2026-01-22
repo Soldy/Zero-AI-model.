@@ -3,7 +3,11 @@ import math
 import time
 from multiprocessing import Queue, Process
 
-def mesure(queue_ :Queue, name_:str,func_:callable, var_:any)->None:
+def mesure(
+  queue_ :Queue,
+  name_:str,
+  func_:callable,
+  var_:any)->None:
     start = math.floor(time.time()*1000)
     out=func_(var_)
     dest = math.ceil(time.time()*1000) - start
@@ -16,12 +20,21 @@ def mesure(queue_ :Queue, name_:str,func_:callable, var_:any)->None:
 class Timer:
     def __init__(self,):
         self._timers={}
-    def mesureTimeout(self, name_:str,func_:callable, var_:any, timeout :int)->any:
+    def mesureTimeout(
+      self,
+      name_:str,
+      func_:callable,
+      var_:any,
+      timeout :int)->any:
         out = []
         looped = 0
         timeout = (timeout*100)
         queue = Queue()
-        proc = Process(target=mesure, args=(queue, name_,func_,var_,))
+        proc = Process(
+          target=mesure,
+          args=(queue,
+          name_,
+          func_,var_,))
         self._timers[name_] = 'timed out'
         proc.start()
         while True:
@@ -38,7 +51,11 @@ class Timer:
                 time.sleep(0.1)
                 break
         return out
-    def mesure(self, name_:str,func_:callable, var_:any)->any:
+    def mesure(
+      self,
+      name_:str,
+      func_:callable,
+      var_:any)->any:
         sys.stdout.write(name_ + ' : ')
         sys.stdout.flush()
         out = self.mesureTimeout(
@@ -50,7 +67,11 @@ class Timer:
         print(str(self._timers[name_]))
         print('count : '+str(len(out)))
         return out
-    def mesureCount(self, name_:str,func_:callable, var_:any)->any:
+    def mesureCount(
+      self,
+      name_:str,
+      func_:callable,
+      var_:any)->any:
         out = self.mesure(
           name_,
           func_,
