@@ -8,12 +8,13 @@ def mesure(
   name_:str,
   func_:callable,
   var_:any)->None:
-    start = math.floor(time.time()*1000)
+    start = time.time()
     out=func_(var_)
-    dest = math.ceil(time.time()*1000) - start
+    end = time.time()
+    time_spent = math.ceil(end*1000) - math.floor(start*1000)
     queue_.put({
       'out':out,
-      'time' : dest
+      'time' : time_spent
     })
 
 
